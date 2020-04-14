@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Negocio"
   ],
-  "SelectedNode": "\\Ejercicio_T8_2A.sln",
+  "SelectedNode": "\\Negocio\\Monedero.cs",
   "PreviewInSolutionExplorer": false
 }
