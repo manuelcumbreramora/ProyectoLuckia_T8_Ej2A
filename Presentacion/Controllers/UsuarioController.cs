@@ -8,9 +8,22 @@ namespace Presentacion.Controllers
 {
     public class UsuarioController : Controller
     {
-        // GET: Usuario
         public ActionResult Index()
         {
+            return View("Registro");
+        }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
             return View();
         }
     }
