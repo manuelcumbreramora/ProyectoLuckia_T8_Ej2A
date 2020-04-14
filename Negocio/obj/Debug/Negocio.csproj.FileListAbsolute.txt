@@ -1,0 +1,2 @@
+C:\Users\ruben.picadodoval\Source\Repos\ProyectoLuckia_T8_Ej2A1\Negocio\obj\Debug\Negocio.csprojAssemblyReference.cache
+C:\Users\ruben.picadodoval\Source\Repos\ProyectoLuckia_T8_Ej2A1\Negocio\obj\Debug\Negocio.csproj.CoreCompileInputs.cache
