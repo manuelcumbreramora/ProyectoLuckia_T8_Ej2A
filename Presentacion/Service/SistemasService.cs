@@ -24,5 +24,26 @@ namespace Presentacion.Service
         {
             return sistema.RecuperarListaTransaccionPorIdUsuario(idUser);
         }
+
+        public Usuario CrearUsuario(String Login, String Pass)
+        {
+            return sistema.CrearUsuario(Login, Pass);
+        }
+        public Usuario ExisteLogin(String Login)
+        {
+            return sistema.ExisteLogin(Login);
+        }
+        public Usuario VerificarLogin(String Login, String Pass)
+        {
+            return sistema.VerificarLogin(Login, Pass);
+        }
+        public Usuario RecuperarUsuarioPorId(int IdUsuario)
+        {
+            return sistema.RecuperarUsuarioPorId(IdUsuario);
+        }
+        public Usuario RegistroUsuario(String Login, String Pass)
+        {
+            return sistema.RegistroUsuario(Login, Pass);
+        }
     }
 }
