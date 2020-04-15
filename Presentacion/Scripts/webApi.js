@@ -23,7 +23,7 @@
 }
 
 function enviarInicioSesion(usuario, password) {
-    $.ajax({
+    /*$.ajax({
         url: raizUrl + '/api/usuarios/inicioSesion',
         type: 'POST',
         dataType: 'json',
@@ -43,5 +43,6 @@ function enviarInicioSesion(usuario, password) {
                 alert('Usuario Incorrecto.');
             }
         }
-    });
+    });*/
+    window.location.href = "Transaccion\RegistroTransaccion.cshtml";
 }
