@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conexion.cs" />
+    <Compile Include="DatoMonedero\DAOIMPLMonedero.cs" />
+    <Compile Include="DatoMonedero\DTOMonedero.cs" />
+    <Compile Include="DatoMonedero\IDAOMonedero.cs" />
     <Compile Include="DatosTransaccion\DAOTransaccion.cs" />
     <Compile Include="DatosTransaccion\DTOTransaccion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
