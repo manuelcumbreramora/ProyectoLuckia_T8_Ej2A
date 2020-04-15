@@ -42,6 +42,7 @@ public class DAOIMPLMonedero : IDAOMonedero
 
     int IDAOMonedero.RecuperarMonedero(int id)
     {
+        //DAO recuperar monedero
         DTOMonedero monedero = new DTOMonedero();
         SqlConnection connection = new SqlConnection(this.conexion.GetNombreConexion());
         connection.Open();
