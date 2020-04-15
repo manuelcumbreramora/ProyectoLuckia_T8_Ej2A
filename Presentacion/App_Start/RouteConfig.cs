@@ -18,6 +18,12 @@ namespace Presentacion
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Usuario", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Transaccion",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Transaccion", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

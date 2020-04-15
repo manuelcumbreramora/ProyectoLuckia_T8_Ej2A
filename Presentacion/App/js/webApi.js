@@ -44,7 +44,7 @@ function enviarInicioSesion(usuario, password) {
             }
         }
     });*/
-    //location.href = "Transaccion/RegistroTransaccion.html";
+    location.href = "Transaccion/RegistroTransaccion.html";
 }
 
 function generarSesion() {
