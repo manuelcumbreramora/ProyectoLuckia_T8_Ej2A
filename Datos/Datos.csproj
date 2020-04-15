@@ -45,6 +45,9 @@
     <Compile Include="DatosTransaccion\DAOTransaccion.cs" />
     <Compile Include="DatosTransaccion\DTOTransaccion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsuarioDao\DAOImpUsuario.cs" />
+    <Compile Include="UsuarioDao\IDAOUsuario.cs" />
+    <Compile Include="UsuarioDao\UsuarioDTO.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
