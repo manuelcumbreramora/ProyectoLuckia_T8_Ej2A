@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Datos">
-      <HintPath>..\Datos\bin\Debug\Datos.dll</HintPath>
+      <HintPath>..\Datos\obj\Debug\Datos.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

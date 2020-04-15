@@ -1,7 +1,9 @@
-﻿using Celula.Application.Services.Usuario;
-using Celula.Extensions.Controllers;
+﻿using Celula.Extensions.Controllers;
 using System.Data;
 using System.Web.Mvc;
+using Negocio;
+using System.Collections.Generic;
+using System;
 
 namespace Celula.Controllers.Api
 {
@@ -12,11 +14,21 @@ namespace Celula.Controllers.Api
     public class UsuariosController : ApiBaseController
     {
 
-        [HttpPost, Route("indentificacion")]
+        Sistema sistemaService = new Sistema();
+
+        [HttpPost, Route("inicioSesion")]
         public ActionResult IdentificarUsuarios(string nombre, string pass)
         {
-            UsuarioService usuarioServicio = new UsuarioService();
-            var result = usuarioServicio.Identificacion(nombre, pass);
+            Usuario usuario = sistemaService.VerificarLogin(nombre, pass);
+            DataTable result = new DataTable();
+            if (result != null)
+            {
+                System.Web.HttpContext.Current.Session["IdUsuario"] = usuario.GetIdUsuario().ToString();
+                DataColumn colIds = new DataColumn("id");
+                colIds.DataType = System.Type.GetType("System.Int32");
+                result.Columns.Add(colIds);
+                result.Rows.Add(new Object[] { usuario.GetIdUsuario().ToString() });
+            }
             return result != null ? JsonSuccess(result) : JsonError("Error al cargar usuario");
         }
 
@@ -24,21 +36,20 @@ namespace Celula.Controllers.Api
         public ActionResult RegistrarUsuarios(string nombre, string pass)
         {
             //User result = usuarioServicio.Identificacion(nombre, pass);
+            Usuario usuario = sistemaService.CrearUsuario(nombre, pass);
             DataTable result = new DataTable();
-            /*if (result != null)
+            if (result != null)
             {
-                System.Web.HttpContext.Current.Session["IdUsuario"] = result.id.ToString();
-                System.Web.HttpContext.Current.Session["NombreUsuario"] = result.usuario;
+                System.Web.HttpContext.Current.Session["IdUsuario"] = usuario.GetIdUsuario().ToString();
                 DataColumn colIds = new DataColumn("id");
                 colIds.DataType = System.Type.GetType("System.Int32");
-                usuario.Columns.Add(colIds);
-                DataColumn colNombre = new DataColumn("nombre");
-                colNombre.DataType = System.Type.GetType("System.String");
-                usuario.Columns.Add(colNombre);
-                usuario.Rows.Add(new Object[] { result.id.ToString(), result.usuario });
-            }*/
-            return result != null ? JsonSuccess(result) : JsonError("Error al cargar usuario");
+                result.Columns.Add(colIds);
+                result.Rows.Add(new Object[] { usuario.GetIdUsuario().ToString() });
+            }
+            return result != null ? JsonSuccess(result) : JsonError("Error al guardar el usuario");
         }
 
     }
+
+}
 }

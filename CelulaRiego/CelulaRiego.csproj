@@ -181,6 +181,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\Api\MonederoController.cs" />
+    <Compile Include="Controllers\Api\TransaccionController.cs" />
     <Compile Include="Controllers\Api\UsuariosController.cs" />
     <Compile Include="Extensions\ActionResults\JsonNetResult.cs" />
     <Compile Include="Extensions\Controllers\ApiBaseController.cs" />
@@ -214,7 +216,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Negocio\Negocio.csproj">
+      <Project>{0f61b705-a4f9-44f2-87ab-1ef85fd2ce12}</Project>
+      <Name>Negocio</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

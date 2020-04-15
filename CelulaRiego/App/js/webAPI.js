@@ -3,21 +3,6 @@ var raizUrl = '';
 
 /*USUARIOS*/
 
-function indentificar(vnombre, vpass) {
-
-    $.ajax({
-        url: raizUrl + '/api/usuarios/indentificacion',
-        type: 'POST',
-        dataType: 'json',
-        cache: false,
-        data: { nombre: vnombre, pass: vpass },
-        success: function (objeto) {
-            localStorage.setItem("idUsuario", objeto.data[0].id);
-            localStorage.setItem("nombreUsuario", objeto.data[0].nombre);
-        }
-    });
-}
-
 function enviarRegistro(usuario, password) {
     $.ajax({
         url: raizUrl + '/api/usuarios/registro',
@@ -29,21 +14,20 @@ function enviarRegistro(usuario, password) {
             //var usuario = objeto.data;
             if (objeto.data.length > 0) {
                 if (parseInt(objeto.data[0].id) > 0) {
-                    //localStorage.setItem("idUsuario", objeto.data[0].id);
-                    //localStorage.setItem("nombreUsuario", objeto.data[0].nombre);
-                    //window.location.href = "partidos.html";
+                    localStorage.setItem("idUsuario", objeto.data[0].id);
+                    location.href = "../App/Monedero/IngresarDinero.html"
                 } else {
-                    alert('Error de conexión a BBDD.');
+                    alert('El usuario no ha llegado sin id.');
                 }
             } else {
-                alert('Usuario Incorrecto.');
+                alert('El usuario no ha sido guardado.');
             }
         }
     });
 }
 
 function enviarInicioSesion(usuario, password) {
-    /*$.ajax({
+    $.ajax({
         url: raizUrl + '/api/usuario/inicioSesion',
         type: 'POST',
         dataType: 'json',
@@ -53,9 +37,8 @@ function enviarInicioSesion(usuario, password) {
             //var usuario = objeto.data;
             if (objeto.data.length > 0) {
                 if (parseInt(objeto.data[0].id) > 0) {
-                    //localStorage.setItem("idUsuario", objeto.data[0].id);
-                    //localStorage.setItem("nombreUsuario", objeto.data[0].nombre);
-                    //window.location.href = "partidos.html";
+                    localStorage.setItem("idUsuario", objeto.data[0].id);
+                    location.href = "../App/Monedero/VerMonedero.html"
                 } else {
                     alert('Error de conexión a BBDD.');
                 }
@@ -63,9 +46,7 @@ function enviarInicioSesion(usuario, password) {
                 alert('Usuario Incorrecto.');
             }
         }
-    });*/
-    console.log(usuario, password);
-    location.href = "../Transaccion/registroTransaccion.html"
+    });
 }
 
 function generarSesion() {
