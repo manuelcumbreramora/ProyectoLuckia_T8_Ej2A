@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Data.SqlClient;
 
+
+namespace Datos { 
 public class DAOIMPLMonedero : IDAOMonedero
 {
     public Conexion conexion;
