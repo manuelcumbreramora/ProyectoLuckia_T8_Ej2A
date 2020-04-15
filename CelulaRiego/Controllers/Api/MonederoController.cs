@@ -15,7 +15,7 @@ namespace CelulaRiego.Controllers.Api
         Sistema sistemaService = new Sistema();
 
         [HttpPost, Route("registro")]
-        public ActionResult RegistrarMonedero(int importe, string divisa, int idUsuario)
+        public ActionResult RegistrarMonedero(int importeMonedero, string divisaMonedero, int idUsuario)
         {
             //Monedero monedero = sistemaService.CrearMonedero(importe, divisa, idUsuario);
             DataTable result = new DataTable();

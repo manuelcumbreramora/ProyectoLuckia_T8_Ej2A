@@ -11,10 +11,9 @@
     <div class="span3">
         <h2>Monedero</h2>
         <form method="post" enctype="multipart/form-data">
-            <label>Ingresa o Retira Dinero</label>
-            <input type="number" id="cantidadTransferencia" name="cantidadTransferencia" class="span3">
-            <label><input type="checkbox" name="terms"> I agree with the <a href="#">Terms and Conditions</a>.</label>
-            <input type="button" value="Aceptar" class="btn btn-primary pull-right">
+            <input type="number" id="importe" class="span3" placeholder="Introduzca un importe..">
+            <input type="text" id="divisa" class="span3" placeholder="Introduzca una divisa..">
+            <button onclick="enviarMonedero($('#importe').val(), $('#divisa').val())">Ingresar</button>
             <div class="clearfix"></div>
         </form>
     </div>

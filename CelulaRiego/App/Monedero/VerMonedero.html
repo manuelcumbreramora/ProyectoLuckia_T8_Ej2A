@@ -10,7 +10,15 @@
 <body>
     <div class="span3">
         <h2>Monedero. Saldo disponible</h2>
-        <h3 id="monedero">000000</h3>
+        <input type="number" id="saldo" readonly>
+        <button id="btViewTransaccion" onclick="viewTransaccion()">Realizar una transacción</button>
+        <button id="btViewMonedero" onclick="viewMonederoCrear">Añadir saldo al monedero</button>
     </div>
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        consultarMonedero();
+    });
+</script>

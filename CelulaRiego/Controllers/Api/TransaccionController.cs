@@ -15,10 +15,10 @@ namespace CelulaRiego.Controllers.Api
         Sistema sistemaService = new Sistema();
 
         [HttpPost, Route("registro")]
-        public ActionResult RegistrarTransaccion(int importe, int idMonedero, string tipo)
+        public ActionResult RegistrarTransaccion(int importeTransaccion, string tipoTransaccion, int idMonedero)
         {
             //User result = usuarioServicio.Identificacion(nombre, pass);
-            Transaccion transaccion = sistemaService.InsertarTransaccion(importe, idMonedero, tipo);
+            Transaccion transaccion = sistemaService.InsertarTransaccion(importeTransaccion, idMonedero, tipoTransaccion);
             DataTable result = new DataTable();
             return result != null ? JsonSuccess(result) : JsonError("Error al cargar usuario");
         }
