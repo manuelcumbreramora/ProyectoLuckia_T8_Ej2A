@@ -1,8 +1,10 @@
-﻿function enviarRegistro(usuario, password) {
-    $.ajax({
-        url: raizUrl + '/api/usuarios/registro',
-        type: 'POST',
+﻿var raizUrl = '';
+function enviarRegistro(usuario, password) {
+    $({
+        url: raizUrl + '/api/usuario/registro',
+        method: 'POST',
         dataType: 'json',
+        headers: { 'Content-Type': 'multipart/form-data' },
         cache: false,
         data: { nombre: usuario, pass: password },
         success: function (objeto) {
@@ -11,7 +13,7 @@
                 if (parseInt(objeto.data[0].id) > 0) {
                     //localStorage.setItem("idUsuario", objeto.data[0].id);
                     //localStorage.setItem("nombreUsuario", objeto.data[0].nombre);
-                    //window.location.href = "partidos.html";
+                    window.location.href = "index.html";
                 } else {
                     alert('Error de conexión a BBDD.');
                 }
@@ -20,11 +22,12 @@
             }
         }
     });
+    
 }
 
 function enviarInicioSesion(usuario, password) {
     /*$.ajax({
-        url: raizUrl + '/api/usuarios/inicioSesion',
+        url: raizUrl + '/api/usuario/inicioSesion',
         type: 'POST',
         dataType: 'json',
         cache: false,
@@ -44,7 +47,8 @@ function enviarInicioSesion(usuario, password) {
             }
         }
     });*/
-    alert("Hola");
+    console.log(usuario, password);
+    location.href = "../Transaccion/RegistroTransaccion.html"
 }
 
 function generarSesion() {
