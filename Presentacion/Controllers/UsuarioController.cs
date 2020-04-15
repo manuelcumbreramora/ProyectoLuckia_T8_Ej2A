@@ -12,25 +12,6 @@ namespace Presentacion.Controllers
     [RoutePrefix("api/usuario")]
     public class UsuarioController : ApiBaseController
     {
-        public ActionResult Index()
-        {
-            return View("Registro");
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         [HttpPost, Route("registro")]
         public ActionResult RegistrarUsuario(string nombre, string pass)
         {

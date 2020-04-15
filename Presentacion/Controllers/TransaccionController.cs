@@ -11,7 +11,7 @@ namespace Presentacion.Controllers
         // GET: Transaccion
         public ActionResult Index()
         {
-            return View();
+            return View("RegistroTransaccion");
         }
     }
 }
