@@ -16,7 +16,7 @@ namespace Datos.UsuarioDao
         {
             conexion = new Conexion();
         }
-        public int AgregarUsuario(UsuarioDTO usuario)
+        public UsuarioDTO AgregarUsuario(UsuarioDTO usuario)
         {
             SqlConnection connection = new SqlConnection(this.conexion.GetNombreConexion());
             connection.Open();
@@ -31,8 +31,9 @@ namespace Datos.UsuarioDao
             try
             {
                 int result = (int)cmd.ExecuteScalar();
+                usuario.IdUsuario = result;
                 connection.Close();
-                return result;
+                return usuario;
             }
             catch (Exception)
             {
@@ -101,29 +102,25 @@ namespace Datos.UsuarioDao
             }
         }
 
-        public int? CrearUsuario(string Login, string Pass)
+        public int? BuscarUsuario(String Login)
         {
-            UsuarioDTO usuario = new UsuarioDTO(Login, Pass);
             SqlConnection connection = new SqlConnection(this.conexion.GetNombreConexion());
             connection.Open();
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = connection;
-            cmd.CommandText = "INSERT INTO Usuario(Login,Password,FechaCreacion,EstadoCuenta) OUTPUT INSERTED.IdUsuario VALUES(@Login, @Password,@FechaCreacion,@EstadoCuenta)";
-            cmd.Parameters.AddWithValue("@Login", usuario.Login);
-            cmd.Parameters.AddWithValue("@Password", usuario.Pass);
-            cmd.Parameters.AddWithValue("@FechaCreacion", usuario.FechaCreacion);
-            cmd.Parameters.AddWithValue("@EstadoCuenta", usuario.EstadoCuenta);
+            cmd.CommandText = "SELECT IdUsuario FROM Usuario WHERE Login LIKE @Login";
+            cmd.Parameters.AddWithValue("@Login", Login);
 
             try
             {
                 int? result = (int?)cmd.ExecuteScalar();
-                usuario.IdUsuario = result;
                 connection.Close();
                 return result;
             }
             catch (Exception)
             {
                 connection.Close();
+
                 throw;
             }
         }

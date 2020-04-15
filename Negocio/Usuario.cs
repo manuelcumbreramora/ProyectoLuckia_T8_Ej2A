@@ -21,7 +21,15 @@ namespace Negocio
             FechaCreacion = fechaCreacion;
         }
 
-        private int IdUsuario { get; set; }
+        private int IdUsuario;
+        public int GetIdUsuario()
+        {
+            return this.IdUsuario;
+        }
+        public void SetIdUsuario(int id)
+        {
+            this.IdUsuario = id;
+        }
         private String Login { get; set; }
         private String Pass { get; set; }
         private String EstadoCuenta { get; set; }
