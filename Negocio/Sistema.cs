@@ -61,7 +61,7 @@ namespace Negocio
 
         }
 
-        public List<Transaccion> RecuperarTransaccionPorIdUsuario(int idUser)
+        public List<Transaccion> RecuperarListaTransaccionPorIdUsuario(int idUser)
         {
             List<DTOTransaccion> listaTransDTO = this.ConexionDBTransaccion.RecuperarTransaccionPorIdUsuarioDAO(idUser);
             List<Transaccion> listaTransacciones = new List<Transaccion>();

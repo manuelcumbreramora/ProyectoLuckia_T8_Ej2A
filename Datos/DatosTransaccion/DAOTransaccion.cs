@@ -133,8 +133,8 @@ namespace Datos.DatosTransaccion
              SELECT * FROM Transacion A JOIN Monedero B ON A.IdMonedero=B.IdMonedero JOIN Usuario C ON B.IdUsuario=C.IdUsuario 
 WHERE C.IdUsuario=@idUsuario
              */
-
-            comando.CommandText = "SELECT * FROM Transacion A JOIN Monedero B ON A.IdMonedero=B.IdMonedero JOIN Usuario C ON B.IdUsuario=C.IdUsuario WHERE C.IdUsuario = @idUsuario";
+            //SELECT A.IdTransaccion,A.Importe,A.FechaCreacion,A.TipoTransaccion,A.IdMonedero FROM Transaccion A JOIN Monedero B ON A.IdMonedero=B.IdMonedero JOIN Usuario C ON B.IdUsuario=C.IdUsuario WHERE C.IdUsuario = 1;
+            comando.CommandText = "SELECT A.IdTransaccion,A.Importe,A.FechaCreacion,A.TipoTransaccion,A.IdMonedero FROM Transaccion A JOIN Monedero B ON A.IdMonedero=B.IdMonedero JOIN Usuario C ON B.IdUsuario=C.IdUsuario WHERE C.IdUsuario = @idUsuario";
             comando.Parameters.AddWithValue("@idUsuario", id);
 
             SqlDataReader registro = comando.ExecuteReader();
@@ -142,7 +142,8 @@ WHERE C.IdUsuario=@idUsuario
             {
                 DTOTransaccion nuevaTransaccion = new DTOTransaccion();
                 nuevaTransaccion.SetIdTransaccionDTO(registro.GetInt32(0));
-                nuevaTransaccion.SetImporteDTO(registro.GetFloat(1));
+                float i = (float)registro.GetDouble(1);
+                nuevaTransaccion.SetImporteDTO(i);
                 nuevaTransaccion.SetFechaCreacionDTO(registro.GetDateTime(2));
                 nuevaTransaccion.SetTipoTransaccionDTO(registro.GetString(3));
                 nuevaTransaccion.SetIdMonederoDTO(registro.GetInt32(4));
@@ -155,38 +156,6 @@ WHERE C.IdUsuario=@idUsuario
             return listaTransaccion;
 
         }
-
-        /*public int RecuperarUltimoIdTransaccion()
-        {
-            //creamos un comando para realizar sentencia
-            int ultimoId = 0;
-            SqlConnection conexion;
-            conexion = new SqlConnection(this.conexion.GetNombreConexion());
-            conexion.Open();
-            SqlCommand comando = new SqlCommand(); //sentencia sql que se ejecutará
-            comando.Connection = conexion;//seleccionamos conexión
-
-
-            comando.CommandText = "SELECT MAX(idTransaccion) FROM Transaccion";//asignamos sentencia 
-                                                                        //identificamos parametro consulta
-            SqlDataReader registro = comando.ExecuteReader();//ejecuta la consultar y el resultado se guarda en "registo"
-            if (registro.Read())//si hizo la lectura
-            {
-
-                ultimoId = registro.GetInt32(0);
-
-                registro.Close();
-                conexion.Close();
-                return ultimoId;
-            }
-            else
-            {
-                registro.Close();
-                conexion.Close();
-                return ultimoId;
-            }
-            
-        }*/
 
     }
 }
