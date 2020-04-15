@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Negocio"
+    "\\Datos",
+    "\\Negocio",
+    "\\Presentacion",
+    "\\Presentacion\\Views",
+    "\\Presentacion\\Views\\Usuario"
   ],
-  "SelectedNode": "\\Ejercicio_T8_2A.sln",
+  "SelectedNode": "\\Presentacion\\Views\\Monedero",
   "PreviewInSolutionExplorer": false
 }
