@@ -2,45 +2,53 @@
 
 public class DTOMonedero
 {
-    public int IdMonedero { get; set; }
-    public string Tipo { get; internal set; }
-    public string Divisa { get; internal set; }
-    public float Saldo { get; internal set; }
+    private int IdMonedero;
+    private int IdUsuario;
+    private string Divisa;
+    private float Saldo;
 
-    public DTOMonedero(float saldo, int idMonedero, string tipo, string Divisa)
+    public DTOMonedero(int idMonedero, int idUsuario, float saldo, string divisa)
     {
-        this.Saldo = saldo;
         this.IdMonedero = idMonedero;
-        this.Tipo = tipo;
-        this.Divisa = Divisa;
+        this.IdUsuario = idUsuario;
+        this.Saldo = saldo;
+        this.Divisa = divisa;
     }
 
     public DTOMonedero()
     {
     }
 
-    /* public float GetSaldoDTO()
-     {
-         return this.Saldo;
-     }
-     public void SetSaldoDTO(float saldo)
-     {
-         this.Saldo = saldo;
-     }
-     public int GetIdMonederoDTO()
-     {
-         return this.IdMonedero;
-     }
-     public void SetIdMonederoDTO(int id)
-     {
-         this.IdMonedero = id;
-     }
-     public string GetTipoDTO()
-     {
-         return this.Tipo;
-     }
-     public void SetTipoDTO(string tipo)
-     {
-         this.Tipo = tipo;
-     }*/
+    public float GetSaldoDTO()
+    {
+        return this.Saldo;
+    }
+    public void SetSaldoDTO(float saldo)
+    {
+        this.Saldo = saldo;
+    }
+    public int GetIdMonederoDTO()
+    {
+        return this.IdMonedero;
+    }
+    public void SetIdMonederoDTO(int id)
+    {
+        this.IdMonedero = id;
+    }
+    public int GetIdUsuarioDTO()
+    {
+        return this.IdUsuario;
+    }
+    public void SetIdUsuarioDTO(int id)
+    {
+        this.IdUsuario = id;
+    }
+    public string GetDivisaDTO()
+    {
+        return this.Divisa;
+    }
+    public void SetDivisaDTO(string divisa)
+    {
+        this.Divisa = divisa;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Datos.DatosTransaccion;
+﻿using Datos;
+using Datos.DatosTransaccion;
 using Datos.UsuarioDao;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace Negocio
     {
         private DAOTransaccion ConexionDBTransaccion;
         private DAOImpUsuario UsuarioDao;
+        private DAOIMPLMonedero ConexionDBMonedero;
         public Sistema()
         {
             ConexionDBTransaccion = new DAOTransaccion();
             UsuarioDao = new DAOImpUsuario();
+            ConexionDBMonedero = new DAOIMPLMonedero();
         }
 
         public Usuario CrearUsuario(String Login, String Pass)
@@ -79,7 +82,7 @@ namespace Negocio
             DTOTransaccion nuevoTransDTO = new DTOTransaccion(0, idMonedero, importe, DateTime.Now, tipo);
             nuevoTransDTO = this.ConexionDBTransaccion.AgregarTransaccionDAO(nuevoTransDTO);
 
-            if (nuevoTransDTO.GetIdTransaccionDTO() != 0)
+            if (nuevoTransDTO != null)
             {
                 Transaccion transIngreso = new Transaccion(nuevoTransDTO.GetIdTransaccionDTO(), nuevoTransDTO.GetIdMonederoDTO(), nuevoTransDTO.GetImporteDTO(), nuevoTransDTO.GetFechaCreacionDTO(), nuevoTransDTO.GetTipoTransaccionDTO());
                 return transIngreso;
@@ -133,5 +136,85 @@ namespace Negocio
             return listaTransacciones;
 
         }
+
+        public Monedero InsertarMonedero(int idUsuario, int saldo, string divisa)
+        {
+
+            DTOMonedero nuevoMonederoDTO = new DTOMonedero(0, idUsuario, saldo, divisa);
+            nuevoMonederoDTO = this.ConexionDBMonedero.CrearMonederoDAO(nuevoMonederoDTO);
+
+            if (nuevoMonederoDTO != null)
+            {
+                Monedero monederoIngreso = new Monedero(nuevoMonederoDTO.GetIdMonederoDTO(), nuevoMonederoDTO.GetIdUsuarioDTO(), nuevoMonederoDTO.GetSaldoDTO(), nuevoMonederoDTO.GetDivisaDTO());
+                return monederoIngreso;
+            }
+            return null;
+
+        }
+        public Monedero RecuperarMonederoPorIdMonedero(int idMonedero)
+        {
+            DTOMonedero monederoDTO = this.ConexionDBMonedero.RecuperarMonederoPorIdMonederoDAO(idMonedero);
+            if (monederoDTO != null)
+            {
+                Monedero nuevoMonedero = new Monedero(monederoDTO.GetIdMonederoDTO(), monederoDTO.GetIdUsuarioDTO(), monederoDTO.GetSaldoDTO(), monederoDTO.GetDivisaDTO());
+                return nuevoMonedero;
+            }
+
+            else
+            {
+                return null;
+            }
+
+        }
+        public Monedero RecuperarMonederoPorIdUsuario(int idUsuario)
+        {
+            DTOMonedero monederoDTO = this.ConexionDBMonedero.RecuperarMonederoPorIdUsuarioDAO(idUsuario);
+            if (monederoDTO != null)
+            {
+                Monedero nuevoMonedero = new Monedero(monederoDTO.GetIdMonederoDTO(), monederoDTO.GetIdUsuarioDTO(), monederoDTO.GetSaldoDTO(), monederoDTO.GetDivisaDTO());
+                return nuevoMonedero;
+            }
+
+            else
+            {
+                return null;
+            }
+
+        }
+        public Monedero IngresarSaldoMonedero(int idMonedero, float importeSumar)
+        {
+            DTOMonedero monederoDTO = this.ConexionDBMonedero.RecuperarMonederoPorIdMonederoDAO(idMonedero);
+            float nuevoSaldo = monederoDTO.GetSaldoDTO() + importeSumar;
+            if (this.ConexionDBMonedero.ModificarSaldoMonederoDTO(idMonedero, nuevoSaldo))
+            {
+                Monedero monederoModificado = new Monedero(monederoDTO.GetIdMonederoDTO(), monederoDTO.GetIdUsuarioDTO(), nuevoSaldo, monederoDTO.GetDivisaDTO());
+                return monederoModificado;
+            }
+            else
+            {
+                return null;
+            }
+
+
+        }
+        public Monedero RetirarSaldoMonedero(int idMonedero, float importeRestar)
+        {
+            DTOMonedero monederoDTO = this.ConexionDBMonedero.RecuperarMonederoPorIdMonederoDAO(idMonedero);
+            float nuevoSaldo = monederoDTO.GetSaldoDTO() - importeRestar;
+            if (this.ConexionDBMonedero.ModificarSaldoMonederoDTO(idMonedero, nuevoSaldo))
+            {
+                Monedero monederoModificado = new Monedero(monederoDTO.GetIdMonederoDTO(), monederoDTO.GetIdUsuarioDTO(), nuevoSaldo, monederoDTO.GetDivisaDTO());
+                return monederoModificado;
+            }
+            else
+            {
+                return null;
+            }
+
+
+        }
+
+
+
     }
 }

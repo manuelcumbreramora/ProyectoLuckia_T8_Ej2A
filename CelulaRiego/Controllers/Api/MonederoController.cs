@@ -19,6 +19,13 @@ namespace CelulaRiego.Controllers.Api
         {
             //Monedero monedero = sistemaService.CrearMonedero(importe, divisa, idUsuario);
             DataTable result = new DataTable();
+
+            /*System.Web.HttpContext.Current.Session["idMonedero"] = mondero.GetIdMonedero().ToString();
+            DataColumn colIds = new DataColumn("id");
+            colIds.DataType = System.Type.GetType("System.Int32");
+            result.Columns.Add(colIds);
+            result.Rows.Add(new Object[] { mondero.GetIdMonedero().ToString() });*/
+
             return result != null ? JsonSuccess(result) : JsonError("Error al cargar usuario");
         }
 

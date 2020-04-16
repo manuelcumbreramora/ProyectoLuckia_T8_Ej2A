@@ -2,8 +2,12 @@
 
 public interface IDAOMonedero
 {
-    void CrearMonedero(DTOMonedero monedero);
+    DTOMonedero CrearMonederoDAO(DTOMonedero monederoDTO);
 
-    int RecuperarMonedero(int id);
+    DTOMonedero RecuperarMonederoPorIdMonederoDAO(int id);
+
+    bool ModificarSaldoMonederoDTO(int idMonederoAmodificar, float saldoNuevo);
+
+    DTOMonedero RecuperarMonederoPorIdUsuarioDAO(int idUsuario);
 
 }
