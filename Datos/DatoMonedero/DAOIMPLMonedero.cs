@@ -5,79 +5,139 @@ using System.Data.SqlClient;
 namespace Datos { 
 public class DAOIMPLMonedero : IDAOMonedero
 {
-    public Conexion conexion;
-    public SqlTransaction monedero;
-    public string error;
+        public Conexion conexion;
+        public string error;
 
-    public DAOIMPLMonedero()
-    {
-        conexion = new Conexion();
-    }
-
-
-    void IDAOMonedero.CrearMonedero(DTOMonedero monedero)
-    {
-        bool agrega = false;
-        SqlConnection conexion;
-        conexion = new SqlConnection(this.conexion.GetNombreConexion());
-        conexion.Open();
-        SqlCommand comando = new SqlCommand();
-        comando.Connection = conexion;
-        comando.CommandText = "INSERT INTO Monedero VALUES(@idMonedero, @Saldo, @Tipo,@Divisa)";
-        comando.Parameters.AddWithValue("@Saldo", monedero.Saldo);
-        comando.Parameters.AddWithValue("@Divisa", monedero.IdMonedero);
-        comando.Parameters.AddWithValue("@Tipo", monedero.Tipo);
-
-        try
+        public DAOIMPLMonedero()
         {
-            comando.ExecuteScalar();//Esto ejecuta la sentencia en la BBDD
-            agrega = true;
-        }
-        catch (SqlException ex)
-        {
-            this.error = ex.Message;
+            conexion = new Conexion();
         }
 
-        conexion.Close();
 
-    }
-
-
-    int IDAOMonedero.RecuperarMonedero(int id)
-    {
-        //DAO recuperar monedero
-        DTOMonedero monedero = new DTOMonedero();
-        SqlConnection connection = new SqlConnection(this.conexion.GetNombreConexion());
-        connection.Open();
-        SqlCommand comando = new SqlCommand();
-        comando.Connection = connection;
-        comando.CommandText = "SELECT @Saldo, @Divisa, @Tipo FROM Monedero WHERE @idMonedero=@idMonedero";
-        comando.Parameters.AddWithValue("@idMonedero", id);
-
-        try
+        public DTOMonedero CrearMonederoDAO(DTOMonedero monederoDTO)
         {
-            SqlDataReader reader = comando.ExecuteReader();
-            if (reader.HasRows)
+            int idIngresado = 0;
+            SqlConnection conexion;
+            conexion = new SqlConnection(this.conexion.GetNombreConexion());
+            conexion.Open();
+            SqlCommand comando = new SqlCommand();
+            comando.Connection = conexion;
+
+            String consulta = "INSERT INTO Monedero(IdUsuario,Saldo,Divisa) OUTPUT INSERTED.IdMonedero VALUES(" + monederoDTO.GetIdUsuarioDTO() + ", " + monederoDTO.GetSaldoDTO() + ", '" + monederoDTO.GetDivisaDTO() + "')";
+            comando.CommandText = consulta;
+
+            try
             {
-                while (reader.Read())
+                SqlDataReader registro = comando.ExecuteReader();//Esto ejecuta la sentencia en la BBDD
+
+                if (registro.Read())//si hizo la lectura
                 {
-
-                    monedero.Saldo = reader.GetFloat(0);
-                    monedero.Divisa = reader.GetString(1);
-                    monedero.Tipo = reader.GetString(2);
-
-
+                    idIngresado = registro.GetInt32(0);
+                    monederoDTO.SetIdMonederoDTO(idIngresado);
+                    registro.Close();
+                    conexion.Close();
+                    return monederoDTO;
                 }
             }
-            reader.Close();
-            connection.Close();
-            return id;
+            catch (SqlException ex)
+            {
+                this.error = ex.Message;
+                Console.WriteLine("Error " + this.error);
+                Console.ReadLine();
+            }
+
+            conexion.Close();
+            return null;
+
         }
-        catch (Exception)
+
+
+
+        public DTOMonedero RecuperarMonederoPorIdMonederoDAO(int id)
         {
-            connection.Close();
-            throw;
+            DTOMonedero monedero = new DTOMonedero();
+            SqlConnection connection = new SqlConnection(this.conexion.GetNombreConexion());
+            connection.Open();
+            SqlCommand comando = new SqlCommand();
+            comando.Connection = connection;
+            String consulta = "SELECT IdMonedero,IdUsuario,Divisa,Saldo FROM Monedero WHERE IdMonedero=" + id + ";";
+            comando.CommandText = consulta;
+            // comando.Parameters.AddWithValue("@idMonedero", id);
+            SqlDataReader registro = comando.ExecuteReader();
+            if (registro.Read())//si hizo la lectura
+            {
+                DTOMonedero nuevoMonedero = new DTOMonedero();
+                nuevoMonedero.SetIdMonederoDTO(registro.GetInt32(0));
+                nuevoMonedero.SetIdUsuarioDTO(registro.GetInt32(1));
+                nuevoMonedero.SetDivisaDTO(registro.GetString(2));
+                float i = (float)registro.GetDouble(3);
+                nuevoMonedero.SetSaldoDTO(i);
+
+                registro.Close();
+                connection.Close();
+                return nuevoMonedero;
+            }
+            else
+            {
+                registro.Close();
+                connection.Close();
+                return null;
+            }
+
+        }
+
+        public bool ModificarSaldoMonederoDTO(int idMonederoAmodificar, float saldoNuevo)
+        {
+            bool exitoModificar = false;
+            SqlConnection connection = new SqlConnection(this.conexion.GetNombreConexion());
+            connection.Open();
+            SqlCommand comando = new SqlCommand();
+            comando.Connection = connection;
+            //UPDATE Monedero SET Saldo=@saldo where IdMonedero=idMonedero
+            String consulta = "UPDATE Monedero SET Saldo=" + saldoNuevo + " where IdMonedero=" + idMonederoAmodificar;
+            comando.CommandText = consulta;
+
+            try
+            {
+                comando.ExecuteNonQuery();//Esto ejecuta la sentencia en la BBDD
+                exitoModificar = true;
+            }
+            catch (SqlException ex)
+            {
+                this.error = ex.Message;
+            }
+            return exitoModificar;
+        }
+        public DTOMonedero RecuperarMonederoPorIdUsuarioDAO(int idUsuario)
+        {
+            DTOMonedero monedero = new DTOMonedero();
+            SqlConnection connection = new SqlConnection(this.conexion.GetNombreConexion());
+            connection.Open();
+            SqlCommand comando = new SqlCommand();
+            comando.Connection = connection;
+            String consulta = "SELECT IdMonedero,IdUsuario,Divisa,Saldo FROM Monedero WHERE IdUsuario=" + idUsuario + ";";
+            comando.CommandText = consulta;
+            // comando.Parameters.AddWithValue("@idMonedero", id);
+            SqlDataReader registro = comando.ExecuteReader();
+            if (registro.Read())//si hizo la lectura
+            {
+                DTOMonedero nuevoMonedero = new DTOMonedero();
+                nuevoMonedero.SetIdMonederoDTO(registro.GetInt32(0));
+                nuevoMonedero.SetIdUsuarioDTO(registro.GetInt32(1));
+                nuevoMonedero.SetDivisaDTO(registro.GetString(2));
+                float i = (float)registro.GetDouble(3);
+                nuevoMonedero.SetSaldoDTO(i);
+
+                registro.Close();
+                connection.Close();
+                return nuevoMonedero;
+            }
+            else
+            {
+                registro.Close();
+                connection.Close();
+                return null;
+            }
         }
     }
-}
 }
