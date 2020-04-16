@@ -28,7 +28,7 @@ function enviarRegistro(usuario, password) {
 
 function enviarInicioSesion(usuario, password) {
     $.ajax({
-        url: raizUrl + '/api/usuario/inicioSesion',
+        url: raizUrl + '/api/usuarios/inicioSesion',
         type: 'POST',
         dataType: 'json',
         cache: false,
